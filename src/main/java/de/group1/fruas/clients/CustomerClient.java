@@ -32,7 +32,7 @@ public class CustomerClient {
 		WebTarget customerTarget = baseTarget.path("customers");
 		WebTarget restaurantTarget = baseTarget.path("restaurants");
 		WebTarget menuTarget = baseTarget.path("restaurants/{restaurantId}/menuitems");
-		WebTarget singleCustomerTarget = customerTarget.path("{customerId}");
+		//WebTarget singleCustomerTarget = customerTarget.path("{customerId}");
 
 		System.out.println("Delivery Service REST API Test Client for Customers");
 		int input = 0;
