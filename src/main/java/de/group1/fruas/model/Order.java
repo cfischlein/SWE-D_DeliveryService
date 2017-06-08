@@ -1,9 +1,11 @@
 package de.group1.fruas.model;
 
+import java.util.List;
+
 public class Order {
 	private int id;
 	private boolean isCompleted;
-	private MenuItem menuItems;
+	private List<MenuItem> menuItems;
 	private Restaurant restaurant;
 	private Customer customer;
 	private DeliveryPersonnel deliverer;
@@ -12,7 +14,14 @@ public class Order {
 		
 	}	
 	
-	public Order(boolean isCompleted, MenuItem menuItems, Restaurant restaurant, Customer customer,
+	public Order(boolean isCompleted, List<MenuItem> menuItems, Restaurant restaurant, Customer customer) {		
+		this.isCompleted = isCompleted;
+		this.menuItems = menuItems;
+		this.restaurant = restaurant;
+		this.customer = customer;		
+	}
+	
+	public Order(boolean isCompleted, List<MenuItem> menuItems, Restaurant restaurant, Customer customer,
 			DeliveryPersonnel deliverer) {		
 		this.isCompleted = isCompleted;
 		this.menuItems = menuItems;
@@ -33,10 +42,10 @@ public class Order {
 	public void setCompleted(boolean isCompleted) {
 		this.isCompleted = isCompleted;
 	}
-	public MenuItem getMenuItems() {
+	public List<MenuItem> getMenuItems() {
 		return menuItems;
 	}
-	public void setMenuItems(MenuItem menuItems) {
+	public void setMenuItems(List<MenuItem> menuItems) {
 		this.menuItems = menuItems;
 	}
 	public Restaurant getRestaurant() {

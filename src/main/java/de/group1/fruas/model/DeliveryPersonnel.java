@@ -8,6 +8,10 @@ public class DeliveryPersonnel {
 	private String password;
 	private boolean isAvailable;
 	private Address address;
+	
+	public DeliveryPersonnel() {
+		
+	}
 
 	public int getId() {
 		return id;

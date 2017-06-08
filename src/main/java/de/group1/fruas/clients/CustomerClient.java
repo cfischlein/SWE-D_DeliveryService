@@ -3,6 +3,7 @@ package de.group1.fruas.clients;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import de.group1.fruas.model.Address;
 import de.group1.fruas.model.Customer;
 import de.group1.fruas.model.LoginCredentials;
 import de.group1.fruas.model.MenuItem;
+import de.group1.fruas.model.Order;
 import de.group1.fruas.model.Restaurant;
 
 public class CustomerClient {
@@ -31,6 +33,7 @@ public class CustomerClient {
 		WebTarget baseTarget = client.target("http://localhost:8080/DeliveryService/api/");
 		WebTarget customerTarget = baseTarget.path("customers");
 		WebTarget restaurantTarget = baseTarget.path("restaurants");
+		WebTarget orderTarget = baseTarget.path("orders");
 		WebTarget menuTarget = baseTarget.path("restaurants/{restaurantId}/menuitems");
 		//WebTarget singleCustomerTarget = customerTarget.path("{customerId}");
 
@@ -43,27 +46,28 @@ public class CustomerClient {
 			switch (input) {
 			case 1:
 				login = getLoginCredentialsFromUser(scan);
-				String username = login.getUsername();
-				String password = login.getPassword();
-				List<Customer> customers = customerTarget.request().header("Authorization", encode(username, password))
-						.get(new GenericType<List<Customer>>() {
-						});
-				customers.stream().filter(customer -> customer.getEmail().equals(username))
-						.forEach(System.out::println);
+				String username = login.getUsername();				
+				List<Customer> customers = customerTarget.request()
+												.header("Authorization", encode(login.getUsername(), login.getPassword()))
+												.get(new GenericType<List<Customer>>() {});						
+				customers.stream()
+							.filter(customer -> customer.getEmail().equals(username))							
+							.forEach(System.out::println);
 				break;
+			
 			case 2:
 				Customer customer = getCustomerData(scan);
 				Response postResponse = customerTarget.request().post(Entity.json(customer));
 				System.out.println(postResponse);
 				break;
+			
 			case 3:
-				List<Restaurant> restaurants = restaurantTarget.request().get(new GenericType<List<Restaurant>>() {
-				});
+				List<Restaurant> restaurants = restaurantTarget.request().get(new GenericType<List<Restaurant>>() {});				
 				restaurants.stream().forEach(System.out::println);
 				break;
+			
 			case 4:
-				List<Restaurant> restaurants2 = restaurantTarget.request().get(new GenericType<List<Restaurant>>() {
-				});
+				List<Restaurant> restaurants2 = restaurantTarget.request().get(new GenericType<List<Restaurant>>() {});
 				List<Restaurant> availableRestaurants = restaurants2.stream()
 						.filter(restaurant -> restaurant.isAvailable()).collect(Collectors.toList());
 				System.out.println("Choose a restaurant:");
@@ -73,8 +77,7 @@ public class CustomerClient {
 				int input2 = getUserInputInt(scan);
 				Restaurant chosenRestaurant = availableRestaurants.get(input2 - 1);
 				List<MenuItem> menuItems = menuTarget.resolveTemplate("restaurantId", chosenRestaurant.getId())
-						.request().get(new GenericType<List<MenuItem>>() {
-						});
+						.request().get(new GenericType<List<MenuItem>>() {});
 				List<MenuItem> shoppingCart = new ArrayList<MenuItem>();
 				System.out.println("Add to your shopping cart:");
 				int input3 = 0;
@@ -92,7 +95,59 @@ public class CustomerClient {
 					} else {
 						System.out.println("Thanks for ordering:");
 						shoppingCart.stream().forEach(System.out::println);
-						// TODO CREATE ORDER RESOURCE WITH POST HERE
+						if(login != null) {
+							String username2 = login.getUsername();				
+							List<Customer> customers2 = customerTarget.request()
+															.header("Authorization", encode(login.getUsername(), login.getPassword()))
+															.get(new GenericType<List<Customer>>() {});						
+							Optional<Customer> loggedInCustomer = customers2.stream()
+										.filter(customer3 -> customer3.getEmail().equals(username2))							
+										.findFirst();
+							if(loggedInCustomer.isPresent()) {
+								Order order = new Order(false, shoppingCart, chosenRestaurant, loggedInCustomer.get());
+								Response postResponse2 = orderTarget.request().post(Entity.json(order));
+								System.out.println(postResponse2);
+							}
+						}
+						else {
+							System.out.println("Please create your user account or login:");
+							System.out.println("1)Login");
+							System.out.println("2)Register");
+							System.out.println("3)Cancel");
+							int input4 = 0;
+							while(input4 <= 0 || input4 >= 4) {
+								input4 = getUserInputInt(scan);
+							}
+							switch(input4) {
+								case 1:
+									login = getLoginCredentialsFromUser(scan);
+									String username3 = login.getUsername();				
+									List<Customer> customers3 = customerTarget.request()
+																	.header("Authorization", encode(login.getUsername(), login.getPassword()))
+																	.get(new GenericType<List<Customer>>() {});						
+									Optional<Customer> loggedInCustomer = customers3.stream()
+												.filter(customer3 -> customer3.getEmail().equals(username3))							
+												.findFirst();
+									if(loggedInCustomer.isPresent()) {
+										Order order = new Order(false, shoppingCart, chosenRestaurant, loggedInCustomer.get());
+										Response postResponse2 = orderTarget.request().post(Entity.json(order));
+										System.out.println(postResponse2);
+									}
+									break;
+								case 2:
+									Customer customer4 = getCustomerData(scan);
+									Response postResponse4 = customerTarget.request().post(Entity.json(customer4));
+									Order order = new Order(false, shoppingCart, chosenRestaurant, customer4);
+									Response postResponse2 = orderTarget.request().post(Entity.json(order));
+									System.out.println(postResponse4);
+									System.out.println(postResponse2);
+									break;
+								case 3:
+									break;
+							}
+							
+						}
+						Order order = new Order();
 						shopping = false;
 					}
 				};
@@ -105,10 +160,10 @@ public class CustomerClient {
 		};
 
 		client.close();
-
 		scan.close();
 
-	}
+	}	
+	
 
 	private static Customer getCustomerData(Scanner scan) {
 		System.out.println("First Name:");
