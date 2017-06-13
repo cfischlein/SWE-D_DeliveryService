@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 public class MyTestResource {
 
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String testMethod() {
 		return "it worked";	
 	}
