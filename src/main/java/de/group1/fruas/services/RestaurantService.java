@@ -53,20 +53,4 @@ public class RestaurantService {
 		return restaurants.get(id);
 	}	
 
-	public void addMenuItem(int restaurantId, int menuId, int menuItemId) {
-
-	}
-
-	public void removeMenuItem(int restaurantId, int menuId, int menuItemId) {
-
-	}
-
-	public void viewMenu(int restaurantId, int menuId) {
-
-	}
-
-	public void editMenuItem(int restaurantId, int menuId, MenuItem menuItem) {
-
-	}
-
 }

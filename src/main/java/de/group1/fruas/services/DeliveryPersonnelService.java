@@ -1,38 +1,30 @@
 package de.group1.fruas.services;
 
+import java.util.List;
+
 import de.group1.fruas.model.DeliveryPersonnel;
 
-public class DeliveryPersonnelService
-{
-	public DeliveryPersonnel addDeliverer( DeliveryPersonnel deliverer )
-	{
+public class DeliveryPersonnelService implements Service<DeliveryPersonnel>{
+	
+	@Override
+	public List<DeliveryPersonnel> getAllItems() {
 		return null;
 	}
-	
-	public DeliveryPersonnel deleteDeliverer( int id )
-	{
+	@Override
+	public DeliveryPersonnel deleteItem(int itemId) {
 		return null;
 	}
-	
-	public DeliveryPersonnel editDeliverer( int id )
-	{
+	@Override
+	public DeliveryPersonnel getItem(int itemId) {
 		return null;
 	}
-	
-	public DeliveryPersonnel getDeliverer( int id )
-	{
+	@Override
+	public DeliveryPersonnel addItem(DeliveryPersonnel type) {
 		return null;
 	}
-	
-	public void setAvailability( boolean available )
-	{
-		
+	@Override
+	public DeliveryPersonnel editItem(DeliveryPersonnel type) {
+		return null;
 	}
-	
-	public void confirmCompletion( int oderId )
-	{
-		
-	}
-	
-	
+
 }

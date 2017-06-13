@@ -1,5 +1,6 @@
 package de.group1.fruas.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,7 +11,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import de.group1.fruas.model.Customer;
 import de.group1.fruas.services.CustomerService;
@@ -24,30 +28,35 @@ public class CustomerResource {
 	
 	@GET
 	public List<Customer> getAllCustomers() {
-		return customerService.getAllCustomers();
+		return customerService.getAllItems();
 	}
 	
 	@GET
 	@Path("/{customerId}")
 	public Customer getCustomer(@PathParam("customerId") int id) {	
-		return 	customerService.getCustomer(id);
+		return 	customerService.getItem(id);
 	}
 	
 	@POST
-	public Customer addCustomer(Customer customer) {
-		return customerService.addCustomer(customer);
+	public Response addCustomer(Customer customer, @Context UriInfo uriInfo) {
+		Customer newCustomer = customerService.addItem(customer);
+		String newId = String.valueOf(newCustomer.getId());
+		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+		return Response.created(uri)
+				.entity(newCustomer)				
+				.build();
 	}
 	
 	@PUT
 	@Path("/{customerId}")
 	public Customer updateCustomer(@PathParam("customerId") int id, Customer customer) {
 		customer.setId(id);
-		return customerService.editCustomer(customer);
+		return customerService.editItem(customer);
 	}
 	
 	@DELETE
 	@Path("/{customerId}")
 	public Customer deleteCustomer(@PathParam("customerId") int id) {
-		return customerService.deleteCustomer(id);
+		return customerService.deleteItem(id);
 	}
 }

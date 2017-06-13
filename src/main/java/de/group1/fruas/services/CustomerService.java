@@ -7,10 +7,8 @@ import java.util.Map;
 import de.group1.fruas.database.DatabaseClass;
 import de.group1.fruas.model.Address;
 import de.group1.fruas.model.Customer;
-import de.group1.fruas.model.Order;
-import de.group1.fruas.model.Restaurant;
 
-public class CustomerService {
+public class CustomerService implements Service<Customer>{
 
 	private Map<Integer, Customer> customers = DatabaseClass.getCustomers();
 
@@ -23,21 +21,21 @@ public class CustomerService {
 				new Address("haha", "15224", "hjdfjdf", "221")));
 	}
 
-	public List<Customer> getAllCustomers() {
+	public List<Customer> getAllItems() {
 		return new ArrayList<Customer>(customers.values());
 	}
-
-	public Customer addCustomer(Customer customer) {
+	@Override
+	public Customer addItem(Customer customer) {
 		customer.setId(customers.size() + 1);
 		customers.put(customer.getId(), customer);
 		return customer;
 	}
 
-	public Customer deleteCustomer(int id) {
+	public Customer deleteItem(int id) {
 		return customers.remove(id);
 	}
-
-	public Customer editCustomer(Customer customer) {
+	@Override
+	public Customer editItem(Customer customer) {
 		if (customer.getId() <= 0) {
 			return null;
 		}
@@ -45,17 +43,10 @@ public class CustomerService {
 		return customer;
 	}
 
-	public Customer getCustomer(int id) {
+	public Customer getItem(int id) {
 		Customer customer = customers.get(id);
 		return customer;
 	}
-
-	public Restaurant findRestaurants() {
-		return null;
-	}
-
-	public void placeOrder(Order order) {
-
-	}
-
+	
+	
 }

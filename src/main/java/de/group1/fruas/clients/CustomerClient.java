@@ -1,7 +1,6 @@
 package de.group1.fruas.clients;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -28,14 +27,12 @@ public class CustomerClient {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 		LoginCredentials login = null;
-
 		Client client = ClientBuilder.newClient();
 		WebTarget baseTarget = client.target("http://localhost:8080/DeliveryService/api/");
 		WebTarget customerTarget = baseTarget.path("customers");
 		WebTarget restaurantTarget = baseTarget.path("restaurants");
-		WebTarget orderTarget = baseTarget.path("orders");
 		WebTarget menuTarget = baseTarget.path("restaurants/{restaurantId}/menuitems");
-		//WebTarget singleCustomerTarget = customerTarget.path("{customerId}");
+		WebTarget orderTarget = baseTarget.path("orders");		
 
 		System.out.println("Delivery Service REST API Test Client for Customers");
 		int input = 0;
@@ -67,6 +64,7 @@ public class CustomerClient {
 				break;
 			
 			case 4:
+				// GET on /restaurants 
 				List<Restaurant> restaurants2 = restaurantTarget.request().get(new GenericType<List<Restaurant>>() {});
 				List<Restaurant> availableRestaurants = restaurants2.stream()
 						.filter(restaurant -> restaurant.isAvailable()).collect(Collectors.toList());
@@ -147,7 +145,6 @@ public class CustomerClient {
 							}
 							
 						}
-						Order order = new Order();
 						shopping = false;
 					}
 				};
