@@ -13,8 +13,8 @@ public class Restaurant {
 	private String email;
 	private Address address;
 	private Membership membership;
-	private Map<Integer, Feedback> feedback = new HashMap<>();
-	private Map<Integer, MenuItem> menuItems = new HashMap<>();
+	private Map<Integer, Feedback> feedback;
+	private Map<Integer, MenuItem> menuItems;
 	private boolean isAvailable;
 
 	public Restaurant() {

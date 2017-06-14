@@ -13,10 +13,10 @@ public class MenuItemService {
 private Map<Integer, Restaurant> restaurants = DatabaseClass.getRestaurants();
 	
 	public MenuItemService() {
-		restaurants.get(1).getMenuItems().put(1, new MenuItem(1, "Large Pizza", 5.5));
+		/*restaurants.get(1).getMenuItems().put(1, new MenuItem(1, "Large Pizza", 5.5));
 		restaurants.get(1).getMenuItems().put(2, new MenuItem(2, "Small Pizza", 4.4));
 		restaurants.get(2).getMenuItems().put(1, new MenuItem(1, "Large Burger", 7.7));
-		restaurants.get(2).getMenuItems().put(2, new MenuItem(2, "Small Burger", 6.6));
+		restaurants.get(2).getMenuItems().put(2, new MenuItem(2, "Small Burger", 6.6));*/
 	}
 
 	public List<MenuItem> getAllMenuItems(int restaurantId) {

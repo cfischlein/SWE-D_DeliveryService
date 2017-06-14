@@ -25,7 +25,7 @@ public class OrderService {
 		items.add(new MenuItem(1, "Small Coke", 1.66));
 		Restaurant restaurant = new Restaurant(1, "Tony's Pizza Place", "secretpw", "pizza@tony.com",
 				new Address("12345", "PizzaTown", "PastaStreet", "1"), new RegularMembership(), 
-				new HashMap<Integer, Feedback>(), new HashMap<Integer, MenuItem>(), true);
+				new HashMap<Integer, Feedback>(),new HashMap<Integer, MenuItem>(), true);
 		Customer customer = new Customer(1, "Bruce", "Wayne", "bw@bat.com", "ih8joker",
 				new Address("GothamCity", "1234", "BatcaveSt.", "1"));
 		orders.put(1, new Order(false, items, restaurant, customer, new DeliveryPersonnel()));

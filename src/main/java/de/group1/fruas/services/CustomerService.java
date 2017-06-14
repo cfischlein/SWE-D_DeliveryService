@@ -17,8 +17,8 @@ public class CustomerService implements Service<Customer>{
 				new Address("GothamCity", "1234", "BatcaveSt.", "1")));
 		customers.put(2, new Customer(2, "Peter", "Parker", "pp@spider.net", "i<3mj",
 				new Address("New York", "1234", "ForestHills", "12")));
-		customers.put(3, new Customer(3, "asdf", "fdsa", "asdf", "fdsa",
-				new Address("haha", "15224", "hjdfjdf", "221")));
+		customers.put(3, new Customer(3, "test", "user", "asdf", "fdsa",
+				new Address("city", "1234", "street", "221")));
 	}
 
 	public List<Customer> getAllItems() {
