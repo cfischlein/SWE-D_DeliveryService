@@ -25,7 +25,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		// AUTHENTICATION FOR GET METHODS ON CUSTOMER RESOURCE
+		// Authentication only for GET requests on Customer resource
 		if (requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX)
 				&& requestContext.getMethod().equals("GET")) {
 			

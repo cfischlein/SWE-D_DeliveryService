@@ -22,8 +22,11 @@ public class RestaurantService {
 		menu1.put(1, new MenuItem(1, "Large Pizza", 5.5));
 		menu1.put(2, new MenuItem(2, "Small Pizza", 4.4));
 		HashMap<Integer, MenuItem> menu2 = new HashMap<Integer, MenuItem>();
-		menu1.put(1, new MenuItem(1, "Large Burger", 7.7));
-		menu1.put(2, new MenuItem(2, "Small Burger", 6.6));
+		menu2.put(1, new MenuItem(1, "Large Burger", 7.7));
+		menu2.put(2, new MenuItem(2, "Small Burger", 6.6));
+		HashMap<Integer, MenuItem> menu3 = new HashMap<Integer, MenuItem>();
+		menu3.put(1, new MenuItem(1, "Lachs Nigiri", 8.7));
+		menu3.put(2, new MenuItem(2, "Thunfisch Maki", 5.6));
 		restaurants.put(1, new Restaurant(1, "Tony's Pizza Place", "secretpw", "pizza@tony.com",
 				new Address("12345", "PizzaTown", "PastaStreet", "1"), new RegularMembership(), new HashMap<Integer, Feedback>(), menu1, true));
 		
@@ -31,7 +34,7 @@ public class RestaurantService {
 				new Address("54321", "BurgerTown", "FriesStreet", "2"), new RegularMembership(), new HashMap<Integer, Feedback>(), menu2, true));
 		
 		restaurants.put(3, new Restaurant(3, "Susi's Sushi Store", "swordfish", "sushi@susi.net", 
-				new Address("3333", "FishCity", "ShrimpStreet", "33a"), new RegularMembership(), new HashMap<Integer, Feedback>(),new HashMap<Integer, MenuItem>(), false));
+				new Address("3333", "FishCity", "ShrimpStreet", "33a"), new RegularMembership(), new HashMap<Integer, Feedback>(),menu3, false));
 	}
 	
 	public List<Restaurant> getAllRestaurants() {
